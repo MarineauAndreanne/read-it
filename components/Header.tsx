@@ -1,5 +1,6 @@
 import React from "react"
 import Image from "next/image"
+import Link from "next/link"
 import {
   ChevronDownIcon,
   HomeIcon,
@@ -21,20 +22,24 @@ const Header = () => {
   const { data: session } = useSession()
 
   return (
-    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm">
+    <div className="sticky top-0 z-50 flex bg-white px-4 py-2 shadow-sm items-center">
       <div className="relative h-10 w-20 flex-shrink-0 cursor-pointer">
-        <Image
-          src="https://recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/000/004/762/resized/Greenhouse_Reddit_Logo.png?1610398267"
-          objectFit="contain"
-          layout="fill"
-        />
+        <Link href="/">
+          <Image
+            src="https://recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/000/004/762/resized/Greenhouse_Reddit_Logo.png?1610398267"
+            objectFit="contain"
+            layout="fill"
+          />
+        </Link>
       </div>
 
-      <div className="flex items-center mx-7 xl:min-w-[300px]">
-        <HomeIcon className="h-5 w-5" />
-        <p className="flex-1 ml-2 hidden lg:inline">Home</p>
-        <ChevronDownIcon className="h-5 w-5" />
-      </div>
+      <Link href="/">
+        <div className="flex items-center mx-7 xl:min-w-[300px] hover:cursor-pointer">
+          <HomeIcon className="h-5 w-5" />
+          <p className="flex-1 ml-2 hidden lg:inline">Home</p>
+          <ChevronDownIcon className="h-5 w-5" />
+        </div>
+      </Link>
 
       <form className="flex flex-1 items-center space-x-2 border bordere-gray-200 rounded-sm bg-gray-100 px-3 py-1">
         <SearchIcon className="h-6 w-6 text-gray-400" />

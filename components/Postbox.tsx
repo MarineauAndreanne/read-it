@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { useMutation } from "@apollo/client"
 import client from "../apollo-client"
 import { ADD_POST, ADD_SUBREDDIT } from "../graphql/mutations"
-import { GET_SUBREDDIT_BY_TOPIC } from "../graphql/queries"
+import { GET_ALL_POSTS, GET_SUBREDDIT_BY_TOPIC } from "../graphql/queries"
 // import toast from "react-hot-toast"
 
 type FormData = {
@@ -16,9 +16,15 @@ type FormData = {
   subreddit: string
 }
 
-const Postbox = () => {
+type Props = {
+  subreddit?: string
+}
+
+const Postbox = ({ subreddit }: Props) => {
   const { data: session } = useSession()
-  const [addPost] = useMutation(ADD_POST)
+  const [addPost] = useMutation(ADD_POST, {
+    refetchQueries: [GET_ALL_POSTS, "getPostList"],
+  })
   const [addSubreddit] = useMutation(ADD_SUBREDDIT)
 
   const [imageBoxOpen, setImageBoxOpen] = useState(false)
@@ -42,7 +48,7 @@ const Postbox = () => {
       } = await client.query({
         query: GET_SUBREDDIT_BY_TOPIC,
         variables: {
-          topic: formData.subreddit,
+          topic: subreddit || formData.subreddit,
         },
       })
 
@@ -118,7 +124,7 @@ const Postbox = () => {
   return (
     <form
       onSubmit={onSubmit}
-      className="sticky top-16 z-50 bg-white border border-gray-300 rounded-md p-2"
+      className="sticky top-20 z-50 bg-white border border-gray-300 rounded-md p-2"
     >
       <div className="flex items-center space-x-3">
         <Avatar />
@@ -130,7 +136,9 @@ const Postbox = () => {
           type="text"
           placeholder={
             session
-              ? "Create a new post - Enter a title"
+              ? subreddit
+                ? `Create a post in r/${subreddit}`
+                : "Create a new post - Enter a title"
               : "Sign in to create a new post"
           }
         />
@@ -156,15 +164,17 @@ const Postbox = () => {
             />
           </div>
 
-          <div className="flex items-center px-2">
-            <p className="min-2-[90px]">Subreddit:</p>
-            <input
-              {...register("subreddit", { required: true })}
-              className="m-2 flex-1 bg-blue-50 p-2 outline-none"
-              type="text"
-              placeholder="i.e mariokart"
-            />
-          </div>
+          {!subreddit && (
+            <div className="flex items-center px-2">
+              <p className="min-2-[90px]">Subreddit:</p>
+              <input
+                {...register("subreddit", { required: true })}
+                className="m-2 flex-1 bg-blue-50 p-2 outline-none"
+                type="text"
+                placeholder="i.e mariokart"
+              />
+            </div>
+          )}
 
           {imageBoxOpen && (
             <div className="flex items-center px-2">
