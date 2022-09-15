@@ -8,7 +8,7 @@ type Props = {
 }
 // const Feed = () => {
 //   return <h1>hello</h1>
-// }
+
 const Feed = ({ topic }: Props) => {
   const { data, error } = !topic
     ? useQuery(GET_ALL_POSTS)

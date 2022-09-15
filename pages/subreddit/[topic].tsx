@@ -8,6 +8,7 @@ const Subreddit = () => {
   const {
     query: { topic },
   } = useRouter()
+
   return (
     <div className={`h-24 bg-red-400 p-8`}>
       <div className="-mx-8 mt-10 bg-white">
