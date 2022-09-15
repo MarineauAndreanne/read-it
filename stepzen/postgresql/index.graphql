@@ -1,7 +1,6 @@
 type Comment {
   created_at: DateTime
   id: ID!
-  post: Post
   post_id: ID
   text: String
   username: String
@@ -41,7 +40,6 @@ type Subreddit {
 type Vote {
   created_at: DateTime
   id: ID!
-  post: Post
   post_id: ID
   upvote: Boolean
   username: String
@@ -177,12 +175,7 @@ type Mutation {
       dml: DELETE
       configuration: "postgresql_config"
     )
-  insertVote(
-    post_id: ID!
-    created_at: DateTime!
-    upvote: Boolean!
-    username: String!
-  ): Vote
+  insertVote(post_id: ID!, upvote: Boolean!, username: String!): Vote
     @dbquery(
       type: "postgresql"
       schema: "public"
