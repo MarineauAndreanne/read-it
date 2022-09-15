@@ -2,6 +2,10 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["recruiting.cdn.greenhouse.io", "cdn-icons-png.flaticon.com"],
+    domains: [
+      "recruiting.cdn.greenhouse.io",
+      "cdn-icons-png.flaticon.com",
+      "avatars.dicebear.com",
+    ],
   },
 }
