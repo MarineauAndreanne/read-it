@@ -16,7 +16,6 @@ import { useSession } from "next-auth/react"
 import { useMutation, useQuery } from "@apollo/client"
 import { GET_ALL_VOTES_BY_POST_ID } from "../graphql/queries"
 import { ADD_VOTE } from "../graphql/mutations"
-import { toNamespacedPath } from "path"
 
 type Props = {
   post: Post
